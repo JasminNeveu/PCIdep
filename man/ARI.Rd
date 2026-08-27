@@ -36,9 +36,9 @@ ARI(cl1, cl2)  # close to 0
 
 }
 \seealso{
-Other Utilities: 
-\code{\link{is.CS}()},
-\code{\link{preserve.cl}()},
-\code{\link{setup.model}()}
+Other Utilities:
+\code{\link[=is.CS]{is.CS()}},
+\code{\link[=preserve.cl]{preserve.cl()}},
+\code{\link[=setup.model]{setup.model()}}
 }
 \concept{Utilities}

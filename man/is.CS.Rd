@@ -30,9 +30,9 @@ is.CS(U2)
 
 }
 \seealso{
-Other Utilities: 
-\code{\link{ARI}()},
-\code{\link{preserve.cl}()},
-\code{\link{setup.model}()}
+Other Utilities:
+\code{\link[=ARI]{ARI()}},
+\code{\link[=preserve.cl]{preserve.cl()}},
+\code{\link[=setup.model]{setup.model()}}
 }
 \concept{Utilities}

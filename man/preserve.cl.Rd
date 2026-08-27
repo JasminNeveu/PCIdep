@@ -38,9 +38,9 @@ preserve.cl(cl, cl_phi2, clusters = c(1, 2))
 
 }
 \seealso{
-Other Utilities: 
-\code{\link{ARI}()},
-\code{\link{is.CS}()},
-\code{\link{setup.model}()}
+Other Utilities:
+\code{\link[=ARI]{ARI()}},
+\code{\link[=is.CS]{is.CS()}},
+\code{\link[=setup.model]{setup.model()}}
 }
 \concept{Utilities}

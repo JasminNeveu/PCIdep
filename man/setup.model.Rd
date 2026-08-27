@@ -57,9 +57,9 @@ setup_result <- setup.model(X = X, U = U, sample_split = TRUE)
 print(setup_result)
 }
 \seealso{
-Other Utilities: 
-\code{\link{ARI}()},
-\code{\link{is.CS}()},
-\code{\link{preserve.cl}()}
+Other Utilities:
+\code{\link[=ARI]{ARI()}},
+\code{\link[=is.CS]{is.CS()}},
+\code{\link[=preserve.cl]{preserve.cl()}}
 }
 \concept{Utilities}
