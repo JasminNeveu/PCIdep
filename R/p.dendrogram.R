@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #' Compute a selective p-dendrogram
 #'
 #' @param X Data matrix used for selective inference.
@@ -150,3 +151,6 @@ p.dendrogram <- function(
     split_indices = split_indices
   )
 }
+=======
+# class p.hcl i.e attributes et methodes
+>>>>>>> origin/pdendro
