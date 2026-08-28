@@ -146,8 +146,8 @@ Post-clustering Inference under Dependence.
 \emph{Journal of the American Statistical Association}. \doi{10.1080/01621459.2026.2707221}.
 }
 \seealso{
-Other post-clustering inference functions: 
-\code{\link{test.clusters.MC}()},
-\code{\link{test.clusters.hc}()}
+Other post-clustering inference functions:
+\code{\link[=test.clusters.MC]{test.clusters.MC()}},
+\code{\link[=test.clusters.hc]{test.clusters.hc()}}
 }
 \concept{post-clustering inference functions}
