@@ -17,7 +17,7 @@
 #' @param Sigma A \eqn{p \times p} positive-definite matrix describing the dependence structure between the columns of \code{X}. If \code{NULL},
 #'   \code{Sigma} is over-estimated from an auxiliary independent sample \code{Y} (in the sense of the Loewner partial order).
 #' @param Y If \code{Sigma} is \code{NULL}, an independent copy of \code{X} used to estimate \code{Sigma}. It must have the same number of columns as
-#'   \code{X}.
+#'   \code{X}, and \code{nrow(Y)} must be strictly greater than \code{ncol(Y)}.
 #' @param UY If \code{Sigma} is \code{NULL}, an \eqn{n_Y \times n_Y} positive-definite matrix describing the dependence structure between the
 #'   rows of \code{Y}. If \code{NULL} and \code{precUY} is not provided, the identity matrix is used by default.
 #' @param precUY The inverse of \code{UY}. Supplying \code{precUY} may improve computational efficiency. If \code{UY} is provided but \code{precUY} is
@@ -47,9 +47,10 @@
 #'   have been computed.
 #' @param ndraws Integer. Number of Monte Carlo samples used to approximate the p-value when \code{linkage = "complete"}. Ignored otherwise.
 #' @param sample_split Logical. Whether to use sample splitting to estimate \code{Sigma} when \code{Sigma = NULL}. Ignored when \code{Sigma} is provided by the user.
-#' @param nY Integer. If \code{Y} is not provided and \code{sample_split = TRUE}, the number of rows of the auxiliary sample \code{Y} used to estimate \code{Sigma}. If \code{nY} is \code{NULL}, half of the rows of \code{X} are used for estimation. Ignored when \code{Sigma} is provided by the user.
+#' @param nY Integer. If \code{Y} is not provided and \code{sample_split = TRUE}, the number of rows of the auxiliary sample \code{Y} used to estimate \code{Sigma}. If \code{nY} is \code{NULL}, half of the rows of \code{X} are used for estimation. Must be strictly greater than \code{ncol(X)}. Ignored when \code{Sigma} is provided by the user.
 #' @param return_Sigma Logical. Whether to include the column covariance matrix used in the test in the returned list. Ignored when \code{Sigma} is provided by the user. Default is \code{FALSE}.
 #' @param return_X_clus Logical. If sample splitting is performed to estimate \code{Sigma}, whether to include the data matrix used for clustering in the returned list. Ignored when \code{sample_split = FALSE} (as the same data matrix is used for clustering and testing). If further analysis of the retrieved clusters is desired, we recommend setting \code{return_X_clus = TRUE} when \code{sample_split = TRUE} to avoid confusion. Default is \code{FALSE}.
+#' @param verbose Logical. Whether to print informational messages about the setup and clustering steps. Warnings are always shown regardless of this argument. Default is \code{TRUE}.
 #'
 #' @details
 #' Selective type I error control is guaranteed when the row covariance matrix \eqn{\mathbf{U}} has a compound symmetry (CS) structure, i.e.,
@@ -146,11 +147,11 @@
 #'
 #' González-Delgado, J., Deronzier, M., Cortés, J., and Neuvial, P. (2026)
 #' Post-clustering Inference under Dependence. 
-#' \emph{Journal of the American Statistical Association}. \doi{10.1080/01621459.2026.2707221}.
+#' \emph{Journal of the American Statistical Association}.
 #'
 #' @export
 
-test.clusters.hc <- function(X, U = NULL, Sigma = NULL, Y = NULL, UY = NULL, precUY = NULL, NC, clusters, linkage = 'average', hcl = NULL, ndraws = 2000, sample_split = FALSE, nY = NULL, return_Sigma = FALSE, return_X_clus = FALSE, dismat = NULL){
+test.clusters.hc <- function(X, U = NULL, Sigma = NULL, Y = NULL, UY = NULL, precUY = NULL, NC, clusters, linkage = 'ward.D', hcl = NULL, ndraws = 2000, sample_split = FALSE, nY = NULL, return_Sigma = FALSE, return_X_clus = FALSE, dismat = NULL, verbose = TRUE){
   
   # --------------- Initial checks and pre-processing ---------------
 
@@ -225,11 +226,11 @@ test.clusters.hc <- function(X, U = NULL, Sigma = NULL, Y = NULL, UY = NULL, pre
   }
   
   # Set up data and dependency structures, estimate Sigma if needed
-  setup_model <- setup.model(X = X, U = U, Sigma = Sigma, Y = Y, UY = UY, precUY = precUY, sample_split = sample_split, nY = nY)
+  setup_model <- setup.model(X = X, U = U, Sigma = Sigma, Y = Y, UY = UY, precUY = precUY, sample_split = sample_split, nY = nY, verbose = verbose)
   X <- setup_model$X
   U <- setup_model$U
   Sigma <- setup_model$Sigma
-  
+
   # --------------- Cluster data ---------------
 
   if (is.null(hcl)) {
@@ -282,7 +283,7 @@ test.clusters.hc <- function(X, U = NULL, Sigma = NULL, Y = NULL, UY = NULL, pre
 
     return(return_list)}else{ # Complete linkage
 
-      cat('Clustering with complete linkage. Monte-Carlo approximation of the p-value.\n')
+      if(verbose){cat('Clustering with complete linkage. Monte-Carlo approximation of the p-value.\n')}
 
       if (!is.numeric(ndraws) || length(ndraws) != 1 || is.na(ndraws) || !is.finite(ndraws) || ndraws <= 0 || ndraws != as.integer(ndraws)) {
         stop("'ndraws' must be a single positive integer.")
