@@ -13,9 +13,6 @@
 #' @param linkage Linkage method.
 #' @param ndraws Number of Monte Carlo draws.
 #' @param sample_split Whether to sample split.
-#' @param nY Number of observations in Y.
-#' @param return_Sigma Return Sigma.
-#' @param return_X_clus Return clustered X.
 #' @param early_stop Enable branch-wise early stopping.
 #' @param alpha Significance level.
 #' @param show_progress Show progress.
@@ -183,11 +180,11 @@ compute.pvals <- function(
           clusters = clusters,
           ndraws = ndraws,
           sample_split = FALSE,
-          nY = nY,
-          return_Sigma = return_Sigma,
-          return_X_clus = return_X_clus,
+          return_Sigma = FALSE,
+          return_X_clus = FALSE,
           hcl = hcl,
-          dismat = dismat
+          dismat = dismat,
+          verbose = verbose
         )
 
         return(
@@ -402,11 +399,11 @@ compute.pvals <- function(
         clusters = clusters,
         ndraws = ndraws,
         sample_split = FALSE,
-        nY = nY,
-        return_Sigma = return_Sigma,
-        return_X_clus = return_X_clus,
+        return_Sigma = FALSE,
+        return_X_clus = FALSE,
         hcl = hcl,
-        dismat = dismat
+        dismat = dismat,
+        verbose = verbose
       )
 
       raw_pval <- max(

@@ -14,6 +14,34 @@ plot.p.hclust <- function(
   ...
 ) {
   validate_p_hclust(x)
+  n_clust <- length(x$order)
+
+  # --- Filtrage automatique des groupes en cas de sample splitting ---
+  if (!is.null(groups) && is.list(groups) && !is.null(x$split_indices)) {
+    idx_clust <- x$split_indices$idx_clustering
+
+    groups <- lapply(groups, function(g) {
+      if (is.null(g)) {
+        return(NULL)
+      }
+
+      # Cas 1 : Le vecteur a la taille initiale N (supérieure à n_clust) -> On filtre sur idx_clustering
+      if (length(g) > n_clust && length(g) >= max(idx_clust)) {
+        return(g[idx_clust])
+      } else if (length(g) == n_clust) {
+        # Cas 2 : Le vecteur a déjà été pré-filtré à la taille n_clust -> On le conserve tel quel
+        return(g)
+      } else {
+        # Cas 3 : Dimension incompatible
+        warning(sprintf(
+          "La taille de l'annotation (%d) ne correspond ni au nombre total d'individus, ni au sous-ensemble de clustering (%d).",
+          length(g),
+          n_clust
+        ))
+        return(g)
+      }
+    })
+  }
 
   if (!is.list(plot_config)) {
     stop("'plot_config' must be a list.")

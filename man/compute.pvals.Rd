@@ -9,17 +9,14 @@ compute.pvals(
   Y,
   hcl,
   dismat,
+  linkage,
   kmax = nrow(X) - 5L,
   parallel_config = NULL,
   U = NULL,
   Sigma = NULL,
   UY = NULL,
   precUY = NULL,
-  linkage = "ward.D",
   ndraws = 2000L,
-  nY = NULL,
-  return_Sigma = FALSE,
-  return_X_clus = FALSE,
   early_stop = FALSE,
   alpha = 0.05,
   show_progress = FALSE,
@@ -37,6 +34,8 @@ compute.pvals(
 
 \item{dismat}{Optional distance matrix.}
 
+\item{linkage}{Linkage method.}
+
 \item{kmax}{Maximum number of clusters to evaluate.}
 
 \item{parallel_config}{Parallel configuration.}
@@ -49,15 +48,7 @@ compute.pvals(
 
 \item{precUY}{Optional precision matrix.}
 
-\item{linkage}{Linkage method.}
-
 \item{ndraws}{Number of Monte Carlo draws.}
-
-\item{nY}{Number of observations in Y.}
-
-\item{return_Sigma}{Return Sigma.}
-
-\item{return_X_clus}{Return clustered X.}
 
 \item{early_stop}{Enable branch-wise early stopping.}
 

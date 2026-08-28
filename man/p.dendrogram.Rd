@@ -10,10 +10,12 @@ p.dendrogram(
   hcl = NULL,
   dismat = NULL,
   split_prop = 0.8,
+  seed = NULL,
   min_pts = 1L,
   alpha = 0.05,
   correction = NULL,
   linkage = "ward.D",
+  early_stop = TRUE,
   ...
 )
 }
@@ -27,6 +29,8 @@ p.dendrogram(
 \item{dismat}{Optional distance matrix (requires Y to be provided).}
 
 \item{split_prop}{Proportion of samples from X used for clustering when Y is NULL (default: 0.8).}
+
+\item{seed}{Optional integer to set the random seed for reproducible sample splitting.}
 
 \item{min_pts}{Minimum size for a valid cluster.}
 

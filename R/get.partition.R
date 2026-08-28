@@ -5,8 +5,8 @@
 #'
 #' @return A vector of cluster labels.
 #' @export
-extract_labels <- function(x, ...) {
-  UseMethod("extract_labels")
+get.partition <- function(x, ...) {
+  UseMethod("get.partition")
 }
 
 
@@ -19,7 +19,7 @@ extract_labels <- function(x, ...) {
 #'
 #' @return Integer vector of cluster labels.
 #' @export
-extract_labels.p.hclust <- function(
+get.partition.p.hclust <- function(
   x,
   min_pts = NULL,
   alpha = NULL,
@@ -43,14 +43,6 @@ extract_labels.p.hclust <- function(
     min_pts = min_pts,
     alpha = alpha
   )
-}
-
-
-# Compatibility alias with singular naming.
-#' @rdname extract_labels
-#' @export
-extract.label <- function(x, ...) {
-  extract_labels(x, ...)
 }
 
 

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #' Compute a selective p-dendrogram
 #'
 #' @param X Data matrix used for selective inference.
@@ -6,6 +5,7 @@
 #' @param hcl Optional hclust object (requires Y to be provided).
 #' @param dismat Optional distance matrix (requires Y to be provided).
 #' @param split_prop Proportion of samples from X used for clustering when Y is NULL (default: 0.8).
+#' @param seed Optional integer to set the random seed for reproducible sample splitting.
 #' @param min_pts Minimum size for a valid cluster.
 #' @param alpha Significance level.
 #' @param correction Multiple-testing correction.
@@ -20,10 +20,12 @@ p.dendrogram <- function(
   hcl = NULL,
   dismat = NULL,
   split_prop = 0.8,
+  seed = NULL,
   min_pts = 1L,
   alpha = 0.05,
   correction = NULL,
   linkage = "ward.D",
+  early_stop = TRUE,
   ...
 ) {
   # --- 1. Validation des arguments d'entrée de base ---
@@ -73,6 +75,14 @@ p.dendrogram <- function(
       stop(
         "'split_prop' must be a single numeric value strictly between 0 and 1."
       )
+    }
+
+    # Fixation optionnelle de la graine pour la reproductibilité
+    if (!is.null(seed)) {
+      if (!is.numeric(seed) || length(seed) != 1L || is.na(seed)) {
+        stop("'seed' must be a single numeric value or integer.")
+      }
+      set.seed(as.integer(seed))
     }
 
     n <- nrow(X)
@@ -138,6 +148,8 @@ p.dendrogram <- function(
     min_pts = min_pts,
     alpha = alpha,
     correction = correction,
+    linkage = linkage,
+    early_stop = early_stop,
     ...
   )
 
@@ -151,6 +163,3 @@ p.dendrogram <- function(
     split_indices = split_indices
   )
 }
-=======
-# class p.hcl i.e attributes et methodes
->>>>>>> origin/pdendro

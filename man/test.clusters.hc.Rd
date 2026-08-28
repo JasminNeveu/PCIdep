@@ -13,14 +13,15 @@ test.clusters.hc(
   precUY = NULL,
   NC,
   clusters,
-  linkage = "average",
+  linkage = "ward.D",
   hcl = NULL,
   ndraws = 2000,
   sample_split = FALSE,
   nY = NULL,
   return_Sigma = FALSE,
   return_X_clus = FALSE,
-  dismat = NULL
+  dismat = NULL,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -34,7 +35,7 @@ observations are assumed to be independent and \code{U} is set to the \eqn{n \ti
 \code{Sigma} is over-estimated from an auxiliary independent sample \code{Y} (in the sense of the Loewner partial order).}
 
 \item{Y}{If \code{Sigma} is \code{NULL}, an independent copy of \code{X} used to estimate \code{Sigma}. It must have the same number of columns as
-\code{X}.}
+\code{X}, and \code{nrow(Y)} must be strictly greater than \code{ncol(Y)}.}
 
 \item{UY}{If \code{Sigma} is \code{NULL}, an \eqn{n_Y \times n_Y} positive-definite matrix describing the dependence structure between the
 rows of \code{Y}. If \code{NULL} and \code{precUY} is not provided, the identity matrix is used by default.}
@@ -65,7 +66,7 @@ after the clustering would have been computed.}
 
 \item{sample_split}{Logical. Whether to use sample splitting to estimate \code{Sigma} when \code{Sigma = NULL}. Ignored when \code{Sigma} is provided by the user.}
 
-\item{nY}{Integer. If \code{Y} is not provided and \code{sample_split = TRUE}, the number of rows of the auxiliary sample \code{Y} used to estimate \code{Sigma}. If \code{nY} is \code{NULL}, half of the rows of \code{X} are used for estimation. Ignored when \code{Sigma} is provided by the user.}
+\item{nY}{Integer. If \code{Y} is not provided and \code{sample_split = TRUE}, the number of rows of the auxiliary sample \code{Y} used to estimate \code{Sigma}. If \code{nY} is \code{NULL}, half of the rows of \code{X} are used for estimation. Must be strictly greater than \code{ncol(X)}. Ignored when \code{Sigma} is provided by the user.}
 
 \item{return_Sigma}{Logical. Whether to include the column covariance matrix used in the test in the returned list. Ignored when \code{Sigma} is provided by the user. Default is \code{FALSE}.}
 
@@ -79,6 +80,8 @@ clustering. When supplied without \code{hcl}, a warning is emitted and the dendr
 a warning is emitted and \code{dismat} is recomputed internally. Ignored (with a warning) when
 \code{sample_split = TRUE}, because sample splitting changes \code{X} after the distance object would
 have been computed.}
+
+\item{verbose}{Logical. Whether to print informational messages about the setup and clustering steps. Warnings are always shown regardless of this argument. Default is \code{TRUE}.}
 }
 \value{
 A named list with the following components:
@@ -186,7 +189,7 @@ Selective inference for hierarchical clustering.
 
 González-Delgado, J., Deronzier, M., Cortés, J., and Neuvial, P. (2026)
 Post-clustering Inference under Dependence. 
-\emph{Journal of the American Statistical Association}. \doi{10.1080/01621459.2026.2707221}.
+\emph{Journal of the American Statistical Association}.
 }
 \seealso{
 Other post-clustering inference functions:

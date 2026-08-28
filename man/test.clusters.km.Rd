@@ -19,7 +19,8 @@ test.clusters.km(
   sample_split = FALSE,
   nY = NULL,
   return_Sigma = FALSE,
-  return_X_clus = FALSE
+  return_X_clus = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -32,7 +33,7 @@ observations are assumed to be independent and \code{U} is set to the \eqn{n \ti
 \code{Sigma} is over-estimated from an auxiliary independent sample \code{Y} (in the sense of the Loewner partial order).}
 
 \item{Y}{If \code{Sigma} is \code{NULL}, an independent copy of \code{X} used to estimate \code{Sigma}. It must have the same number of columns as
-\code{X}.}
+\code{X}, and \code{nrow(Y)} must be strictly greater than \code{ncol(Y)}.}
 
 \item{UY}{If \code{Sigma} is \code{NULL}, an \eqn{n_Y \times n_Y} positive-definite matrix describing the dependence structure between the
 rows of \code{Y}. If \code{NULL} and \code{precUY} is not provided, the identity matrix is used by default.}
@@ -60,11 +61,13 @@ sample splitting changes \code{X} after the clustering would have been computed.
 
 \item{sample_split}{Logical. Whether to use sample splitting to estimate \code{Sigma} when \code{Sigma = NULL}. Ignored when \code{Sigma} is provided by the user.}
 
-\item{nY}{Integer. If \code{Y} is not provided and \code{sample_split = TRUE}, the number of rows of the auxiliary sample \code{Y} used to estimate \code{Sigma}. If \code{nY} is \code{NULL}, half of the rows of \code{X} are used for estimation. Ignored when \code{Sigma} is provided by the user.}
+\item{nY}{Integer. If \code{Y} is not provided and \code{sample_split = TRUE}, the number of rows of the auxiliary sample \code{Y} used to estimate \code{Sigma}. If \code{nY} is \code{NULL}, half of the rows of \code{X} are used for estimation. Must be strictly greater than \code{ncol(X)}. Ignored when \code{Sigma} is provided by the user.}
 
 \item{return_Sigma}{Logical. Whether to include in the returned list the column covariance matrix \code{Sigma} used in the test. When \code{return_Sigma = TRUE}, the returned matrix is included whether \code{Sigma} was provided by the user or estimated internally. Default is \code{FALSE}.}
 
 \item{return_X_clus}{Logical. If sample splitting is performed to estimate \code{Sigma}, whether to include the data matrix used for clustering in the returned list. Ignored when \code{sample_split = FALSE} (as the same data matrix is used for clustering and testing). If further analysis of the retrieved clusters is desired, we recommend setting \code{return_X_clus = TRUE} when \code{sample_split = TRUE} to avoid confusion. Default is \code{FALSE}.}
+
+\item{verbose}{Logical. Whether to print informational messages about the setup steps. Warnings are always shown regardless of this argument. Default is \code{TRUE}.}
 }
 \value{
 A named list with the following components:
@@ -143,7 +146,7 @@ Selective inference for k-means clustering.
 
 González-Delgado, J., Deronzier, M., Cortés, J., and Neuvial, P. (2026)
 Post-clustering Inference under Dependence. 
-\emph{Journal of the American Statistical Association}. \doi{10.1080/01621459.2026.2707221}.
+\emph{Journal of the American Statistical Association}.
 }
 \seealso{
 Other post-clustering inference functions:
